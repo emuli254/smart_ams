@@ -74,11 +74,19 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::patch('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 
 	Route::resource('products', 'App\Http\Controllers\ProductsController')->middleware('auth');
+
+    Route::get('product/issue/{product}', [ 'as' => 'product.issuance.create', 'uses' => 'App\Http\Controllers\ProductsController@issue' ]);
+
+    Route::post('product/issue/', ['as' => 'product.issuance', 'uses' => 'App\Http\Controllers\ProductsController@saveIssue']);
+
 	Route::resource('product-categories', 'App\Http\Controllers\ProductCategoriesController')->middleware('auth');
 	Route::resource('suppliers', 'App\Http\Controllers\SuppliersController')->middleware('auth');
 	Route::resource('office-locations', 'App\Http\Controllers\OfficeLocationsController')->middleware('auth');
 	Route::resource('staff', 'App\Http\Controllers\StaffController')->middleware('auth');
 	Route::resource('orders', 'App\Http\Controllers\OrdersController')->middleware('auth');
+
+
+    // Route::resource('product-issuance', 'App\Http\Controllers\ProductIssuanceController');
 });
 
 Route::group(['middleware' => 'auth'], function () {

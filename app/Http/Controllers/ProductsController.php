@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductIssuance;
 use App\Product;
 use App\ProductCategory;
 use App\Supplier;
+use App\Staff;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
@@ -170,4 +172,39 @@ class ProductsController extends Controller
     {
         //
     }
+
+    public function issue($product)
+    {
+        $product = Product::find($product);
+        $staffs = Staff::all();
+        return view('product-issuance.create')->with('product', $product)->with('staffs', $staffs);
+    }
+
+    public function saveIssue(Request $request)
+    {
+
+        // Validate user input
+        $this->validate($request, [
+            'product_id' => 'required',
+            'staff_id' => 'required',
+            'user_id' => 'required'
+          ]);
+
+        // Create new instance of the model
+        $productissue = new ProductIssuance;
+
+        $productissue->product_id = $request->input('product_id');
+        $productissue->staff_id = $request->input('staff_id');
+        $productissue->issued_by_id = $request->input('user_id');
+
+        // Save the new product
+        $productissue->save();
+
+           // Return to index view with success message
+        return redirect()->route('products.index')->with('success', 'Product has been issued successfully!');
+
+
+    }
+
+
 }

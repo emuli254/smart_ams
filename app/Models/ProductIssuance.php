@@ -10,7 +10,7 @@ class ProductIssuance extends Model
     use HasFactory;
 
     // Table Name
-    protected $table = 'product_issuance';
+    protected $table = 'product_issuances';
 
     // Primary Key
     protected $primaryKey = 'id';
@@ -25,10 +25,10 @@ class ProductIssuance extends Model
       return $this->belongsTo('App\User', 'issued_by_id', 'id' );
     }
 
-    public function is_issued_to()
-    {
-      return $this->belongsTo('App\Staff', 'staff_id', 'id' );
-    }
+    // public function is_issued_to()
+    // {
+    //   return $this->belongsTo('App\Staff', 'staff_id', 'id' );
+    // }
 
 
 }

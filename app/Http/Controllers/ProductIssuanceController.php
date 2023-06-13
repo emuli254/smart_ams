@@ -20,6 +20,9 @@ class ProductIssuanceController extends Controller
     public function create()
     {
         //
+
+
+        // return view('product-issuance.create')->with('product', $product );
     }
 
     /**

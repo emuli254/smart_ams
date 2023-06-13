@@ -10,92 +10,97 @@
 @stop
 
 @section('content')
-	@include('includes.messages')
-    <div class="row">
-			<div class="col-sm-12">
-				<div class="box box-danger">
-					<div class="box-header with-border">
-						<h3 class="box-title">Edit product {{$product->name}}</h3>
-					</div>
-					<div class="box-body">
-						{{-- {!! Form::open(['action' => ['ProductsController@update', $product->id], 'method' => 'post']) !!} --}}
-                        {!! Form::model( $product, ['route' => ['products.update', $product->id], 'method' => 'POST' ]) !!}
 
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="form-group">
-									{{ Form::label('name', 'Product name') }}
-									{{ Form::text('name', $product->name, ['class' => 'form-control', 'placeholder' => 'Product name']) }}
-								</div>
-							</div>
-						</div>
+@include('includes.messages')
 
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  {{Form::label('description', 'Product description')}}
-                  {{Form::textarea('description', $product->description, ['id' => 'ck-textarea', 'class' => 'form-control', 'style' => 'resize: vertical', 'placeholder' => 'Product description'])}}
-                </div>
-              </div>
+
+    <div class="col-sm-12">
+        <div class="box box-danger">
+
+            <div class="box-header with-border">
+                <h3 class="box-title">Edit product {{$product->name}}</h3>
             </div>
 
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group">
-                  {{Form::label('product_category_id', 'Product category')}}
-                  {{Form::select('product_category_id', $categories->pluck('name', 'id'), $product->product_category_id, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Product category'])}}
-                  <p>Is the category you're looking for not in this list? Create it <a target="_blank" href="/product-categories/create">here</a>.</p>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  {{Form::label('supplier_id', 'Supplier')}}
-                  {{Form::select('supplier_id', $suppliers->pluck('name', 'id'), $product->supplier_id, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Supplier'])}}
-                  <p>Is the supplier you're looking for not in this list? Add them <a target="_blank" href="/suppliers/create">here</a>.</p>
-                </div>
-              </div>
-            </div>
+            <div class="box-body">
+                {{-- {!! Form::open(['action' => ['ProductsController@update', $product->id], 'method' => 'post']) !!} --}}
+                {!! Form::model( $product, ['route' => ['products.update', $product->id], 'method' => 'POST' ]) !!}
 
-            <div class="row">
-
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        {{ Form::label('asset_id', 'Asset ID') }}
-                        {{ Form::text('asset_id', $product->asset_id, ['class' => 'form-control', 'placeholder' => 'Asset ID']) }}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            {{ Form::label('name', 'Product name') }}
+                            {{ Form::text('name', $product->name, ['class' => 'form-control', 'placeholder' => 'Product name']) }}
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-sm-6">
+                <div class="row">
+                <div class="col-sm-12">
                     <div class="form-group">
-                    {{Form::label('buy_price', 'Buy-in price')}}
-                    {{Form::number('buy_price', $product->buy_price, ['step' => '0.01', 'class' => 'form-control', 'placeholder' => 'Buy-in price'])}}
+                    {{Form::label('description', 'Product description')}}
+                    {{Form::textarea('description', $product->description, ['id' => 'ck-textarea', 'class' => 'form-control', 'style' => 'resize: vertical', 'placeholder' => 'Product description'])}}
                     </div>
                 </div>
-    		</div>
+                </div>
 
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group">
-                  {{Form::label('instock', 'In stock')}}
-                  {{Form::select('instock', [0 => 'No', 1 => 'Yes'], $product->instock, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'In stock'])}}
+                <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                    {{Form::label('product_category_id', 'Product category')}}
+                    {{Form::select('product_category_id', $categories->pluck('name', 'id'), $product->product_category_id, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Product category'])}}
+                    <p>Is the category you're looking for not in this list? Create it <a target="_blank" href="/product-categories/create">here</a>.</p>
+                    </div>
                 </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  {{Form::label('discontinued', 'Discontinued')}}
-                  {{Form::select('discontinued', [0 => 'No', 1 => 'Yes'], $product->discontinued, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Discontinued'])}}
+                <div class="col-sm-6">
+                    <div class="form-group">
+                    {{Form::label('supplier_id', 'Supplier')}}
+                    {{Form::select('supplier_id', $suppliers->pluck('name', 'id'), $product->supplier_id, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Supplier'])}}
+                    <p>Is the supplier you're looking for not in this list? Add them <a target="_blank" href="/suppliers/create">here</a>.</p>
+                    </div>
                 </div>
-              </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            {{ Form::label('asset_id', 'Asset ID') }}
+                            {{ Form::text('asset_id', $product->asset_id, ['class' => 'form-control', 'placeholder' => 'Asset ID']) }}
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                        {{Form::label('buy_price', 'Buy-in price')}}
+                        {{Form::number('buy_price', $product->buy_price, ['step' => '0.01', 'class' => 'form-control', 'placeholder' => 'Buy-in price'])}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                        {{Form::label('instock', 'In stock')}}
+                        {{Form::select('instock', [0 => 'No', 1 => 'Yes'], $product->instock, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'In stock'])}}
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                        {{Form::label('discontinued', 'Discontinued')}}
+                        {{Form::select('discontinued', [0 => 'No', 1 => 'Yes'], $product->discontinued, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Discontinued'])}}
+                        </div>
+                    </div>
+                </div>
+
+                {{ Form::hidden('_method', 'PUT') }}
+				{{ Form::submit('Save changes', ['class' => 'btn btn-default pull-right']) }}
+
+				{!! Form::close() !!}
+
             </div>
-
-            {{ Form::hidden('_method', 'PUT') }}
-						{{ Form::submit('Save changes', ['class' => 'pull-right btn btn-default']) }}
-
-						{!! Form::close() !!}
-					</div>
-				</div>
-			</div>
+        </div>
     </div>
+
 @stop
 
 @section('js')

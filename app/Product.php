@@ -18,4 +18,9 @@ class Product extends Model
     {
       return $this->hasMany('App\ProductStock');
     }
+
+    public function is_issued_to()
+    {
+      return $this->hasOne('App\Models\ProductIssuance', 'product_id', 'id' );
+    }
 }
