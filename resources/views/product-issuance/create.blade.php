@@ -20,9 +20,9 @@
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open( array( 'route' => 'product.issuance' , 'method' => 'POST' )) !!}
+                    {!! Form::open( array( 'route' => 'productstock.issuance' , 'method' => 'POST' )) !!}
 
-                    <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
+                    <input type="hidden" name="productstock_id" id="productstock_id" value="{{ $product->id }}">
                     <input type="hidden" name="user_id" id="user_id" value="{{ auth()->user()->id }}">
 
                     <div class="row">

@@ -15,17 +15,8 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('category_id')->unsigned();
             $table->string('name');
-            $table->mediumText('description');
-            $table->integer('product_category_id')->unsigned();
-            $table->integer('supplier_id')->unsigned();
-            $table->decimal('buy_price', 8, 2);
-            $table->boolean('instock');
-            $table->boolean('discontinued');
-
-            $table->foreign('product_category_id')->references('id')->on('product_categories')->onDelete('cascade');
-            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
-
             $table->timestamps();
         });
     }

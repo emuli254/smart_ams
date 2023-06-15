@@ -1,4 +1,4 @@
-<!-- 
+<!--
 =========================================================
  Light Bootstrap Dashboard - v2.0.1
 =========================================================
@@ -37,17 +37,24 @@
 
             @if (auth()->check() && request()->route()->getName() != "")
                 @include('layouts.navbars.sidebar')
-                @include('pages/sidebarstyle')
+                {{-- @include('pages/sidebarstyle') --}}
             @endif
 
             <div class="@if (auth()->check() && request()->route()->getName() != "") main-panel @endif">
+
                 @include('layouts.navbars.navbar')
-                @yield('content')
+
+                <div class="">
+
+                    @yield('content')
+
+                </div>
+
                 @include('layouts.footer.nav')
+
             </div>
 
         </div>
-       
 
 
     </body>
@@ -72,7 +79,7 @@
     @stack('js')
     <script>
       $(document).ready(function () {
-        
+
         $('#facebook').sharrre({
           share: {
             facebook: true

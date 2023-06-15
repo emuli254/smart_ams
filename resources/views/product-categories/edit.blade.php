@@ -1,4 +1,5 @@
-@extends('adminlte::page')
+{{-- @extends('adminlte::page') --}}
+@extends('layouts.app', ['activePage' => 'edit', 'title' => 'Edit Product Category', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 
 @section('title', 'Edit product category {{$category->name}}')
 
@@ -15,7 +16,7 @@
 						<h3 class="box-title">Edit product category {{$category->name}}</h3>
 					</div>
 					<div class="box-body">
-						{!! Form::open(['action' => ['ProductCategoriesController@update', $category->id], 'method' => 'post']) !!}
+                        {!! Form::model( $category, ['route' => ['product-categories.update', $category->id], 'method' => 'POST' ]) !!}
 
 						<div class="row">
 							<div class="col-sm-12">
@@ -26,7 +27,7 @@
 							</div>
 						</div>
 
-            {{ Form::hidden('_method', 'PUT') }}
+                        {{ Form::hidden('_method', 'PUT') }}
 						{{ Form::submit('Save changes', ['class' => 'pull-right btn btn-default']) }}
 
 						{!! Form::close() !!}

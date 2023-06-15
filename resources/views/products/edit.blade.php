@@ -37,6 +37,16 @@
                 <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
+                    {{Form::label('product_category_id', 'Product category')}}
+                    {{Form::select('product_category_id', $categories->pluck('name', 'id'), $product->category_id, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => '-- Please Select --'])}}
+                    <p>Is the category you're looking for not in this list? Create it <a target="_blank" href="/product-categories/create">here</a>.</p>
+                    </div>
+                </div>
+                </div>
+
+                {{-- <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
                     {{Form::label('description', 'Product description')}}
                     {{Form::textarea('description', $product->description, ['id' => 'ck-textarea', 'class' => 'form-control', 'style' => 'resize: vertical', 'placeholder' => 'Product description'])}}
                     </div>
@@ -90,7 +100,7 @@
                         {{Form::select('discontinued', [0 => 'No', 1 => 'Yes'], $product->discontinued, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Discontinued'])}}
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 {{ Form::hidden('_method', 'PUT') }}
 				{{ Form::submit('Save changes', ['class' => 'btn btn-default pull-right']) }}

@@ -36,10 +36,9 @@ class ProductsController extends Controller
     {
         // Get product categories and suppliers
         $categories = ProductCategory::all();
-        $suppliers = Supplier::all();
 
         // Return the create view
-        return view('products.create')->with('categories', $categories)->with('suppliers', $suppliers);
+        return view('products.create')->with('categories', $categories);
     }
 
     /**
@@ -53,13 +52,13 @@ class ProductsController extends Controller
         // Validate user input
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3|max:150',
-            'description' => 'required|min:3|max:500',
             'product_category_id' => 'required|numeric',
-            'supplier_id' => 'required|numeric',
-            'asset_id' => 'required',
-            'buy_price' => 'required|numeric',
-            'instock' => 'required|numeric|between:0,1',
-            'discontinued' => 'required|numeric|between:0,1'
+            // 'supplier_id' => 'required|numeric',
+            // 'asset_id' => 'required',
+            // 'buy_price' => 'required|numeric',
+            // 'instock' => 'required|numeric|between:0,1',
+            // 'discontinued' => 'required|numeric|between:0,1'
+            // 'description' => 'required|min:3|max:500',
         ]);
 
         if ($validator->fails()) {
@@ -74,22 +73,23 @@ class ProductsController extends Controller
             // ...
 
             // Create new instance of the model
-        $product = new Product;
+            $product = new Product;
 
-        $product->name = $request->input('name');
-        $product->description = $request->input('description');
-        $product->product_category_id = $request->input('product_category_id');
-        $product->supplier_id = $request->input('supplier_id');
-        $product->asset_id = $request->input('asset_id');
-        $product->buy_price = $request->input('buy_price');
-        $product->instock = $request->input('instock');
-        $product->discontinued = $request->input('discontinued');
+            $product->name = $request->input('name');
+            $product->category_id = $request->input('product_category_id');
 
-        // Save the new product
-        $product->save();
+            // $product->description = $request->input('description');
+            // $product->supplier_id = $request->input('supplier_id');
+            // $product->asset_id = $request->input('asset_id');
+            // $product->buy_price = $request->input('buy_price');
+            // $product->instock = $request->input('instock');
+            // $product->discontinued = $request->input('discontinued');
 
-           // Return to index view with success message
-        return redirect('/products')->with('success', 'Product has been created!');
+            // Save the new product
+            $product->save();
+
+            // Return to index view with success message
+            return redirect('/products')->with('success', 'Product has been created!');
         }
 
     }
@@ -117,11 +117,11 @@ class ProductsController extends Controller
         $product = Product::find($product);
 
         // Get suppliers and categories
-        $suppliers = Supplier::all();
+        // $suppliers = Supplier::all();
         $categories = ProductCategory::all();
 
         // Return the edit view
-        return view('products.edit')->with('product', $product)->with('suppliers', $suppliers)->with('categories', $categories);
+        return view('products.edit')->with('product', $product)->with('categories', $categories);
     }
 
     /**
@@ -139,21 +139,23 @@ class ProductsController extends Controller
         // Validate user input
         $this->validate($request, [
           'name' => 'required|min:3|max:150|unique:products,name,'.$product->id,
-          'description' => 'required|min:3|max:500',
           'product_category_id' => 'required|numeric',
-          'supplier_id' => 'required|numeric',
-          'buy_price' => 'required|numeric',
-          'instock' => 'required|numeric|between:0,1',
-          'discontinued' => 'required|numeric|between:0,1'
+
+        //   'description' => 'required|min:3|max:500',
+        //   'supplier_id' => 'required|numeric',
+        //   'buy_price' => 'required|numeric',
+        //   'instock' => 'required|numeric|between:0,1',
+        //   'discontinued' => 'required|numeric|between:0,1'
         ]);
 
         $product->name = $request->input('name');
-        $product->description = $request->input('description');
-        $product->product_category_id = $request->input('product_category_id');
-        $product->supplier_id = $request->input('supplier_id');
-        $product->buy_price = $request->input('buy_price');
-        $product->instock = $request->input('instock');
-        $product->discontinued = $request->input('discontinued');
+        $product->category_id = $request->input('product_category_id');
+
+        // $product->description = $request->input('description');
+        // $product->supplier_id = $request->input('supplier_id');
+        // $product->buy_price = $request->input('buy_price');
+        // $product->instock = $request->input('instock');
+        // $product->discontinued = $request->input('discontinued');
 
         // Save the updated product
         $product->save();
@@ -173,38 +175,38 @@ class ProductsController extends Controller
         //
     }
 
-    public function issue($product)
-    {
-        $product = Product::find($product);
-        $staffs = Staff::all();
-        return view('product-issuance.create')->with('product', $product)->with('staffs', $staffs);
-    }
+    // public function issue($product)
+    // {
+    //     $product = Product::find($product);
+    //     $staffs = Staff::all();
+    //     return view('product-issuance.create')->with('product', $product)->with('staffs', $staffs);
+    // }
 
-    public function saveIssue(Request $request)
-    {
+    // public function saveIssue(Request $request)
+    // {
 
-        // Validate user input
-        $this->validate($request, [
-            'product_id' => 'required',
-            'staff_id' => 'required',
-            'user_id' => 'required'
-          ]);
+    //     // Validate user input
+    //     $this->validate($request, [
+    //         'product_id' => 'required',
+    //         'staff_id' => 'required',
+    //         'user_id' => 'required'
+    //       ]);
 
-        // Create new instance of the model
-        $productissue = new ProductIssuance;
+    //     // Create new instance of the model
+    //     $productissue = new ProductIssuance;
 
-        $productissue->product_id = $request->input('product_id');
-        $productissue->staff_id = $request->input('staff_id');
-        $productissue->issued_by_id = $request->input('user_id');
+    //     $productissue->product_id = $request->input('product_id');
+    //     $productissue->staff_id = $request->input('staff_id');
+    //     $productissue->issued_by_id = $request->input('user_id');
 
-        // Save the new product
-        $productissue->save();
+    //     // Save the new product
+    //     $productissue->save();
 
-           // Return to index view with success message
-        return redirect()->route('products.index')->with('success', 'Product has been issued successfully!');
+    //        // Return to index view with success message
+    //     return redirect()->route('products.index')->with('success', 'Product has been issued successfully!');
 
 
-    }
+    // }
 
 
 }

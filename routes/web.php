@@ -73,13 +73,20 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::patch('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::patch('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 
-	Route::resource('products', 'App\Http\Controllers\ProductsController')->middleware('auth');
-
-    Route::get('product/issue/{product}', [ 'as' => 'product.issuance.create', 'uses' => 'App\Http\Controllers\ProductsController@issue' ]);
-
-    Route::post('product/issue/', ['as' => 'product.issuance', 'uses' => 'App\Http\Controllers\ProductsController@saveIssue']);
+    // Products
 
 	Route::resource('product-categories', 'App\Http\Controllers\ProductCategoriesController')->middleware('auth');
+    Route::resource('products', 'App\Http\Controllers\ProductsController')->middleware('auth');
+
+    Route::resource('product-stocks', 'App\Http\Controllers\ProductStocksController')->middleware('auth');
+    Route::get('product/stock/{product}', [ 'as' => 'product.stocks.create', 'uses' => 'App\Http\Controllers\ProductStocksController@createStock' ]);
+    // Route::post('product/stock/', ['as' => 'product.stock', 'uses' => 'App\Http\Controllers\ProductsController@saveIssue']);
+
+    Route::get('product-stocks/issue/{product}', [ 'as' => 'productstock.issuance.create', 'uses' => 'App\Http\Controllers\ProductStocksController@issue' ]);
+    Route::post('product-stocks/issue/', ['as' => 'productstock.issuance', 'uses' => 'App\Http\Controllers\ProductStocksController@saveIssue']);
+
+
+
 	Route::resource('suppliers', 'App\Http\Controllers\SuppliersController')->middleware('auth');
 	Route::resource('office-locations', 'App\Http\Controllers\OfficeLocationsController')->middleware('auth');
 	Route::resource('staff', 'App\Http\Controllers\StaffController')->middleware('auth');

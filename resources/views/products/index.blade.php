@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'All Products', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
+@extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'ODPP AMS | Product Master', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 
 @section('title', 'Products')
 
@@ -15,8 +15,8 @@
         <div class="box box-danger">
 
             <div class="box-header with-border">
-                <h3 class="box-title">Products
-                    <a href="{{ route('products.create') }}" class="btn btn-success pull-right"> New Product </a>
+                <h3 class="box-title">Product Master
+                    <a href="{{ route('products.create') }}" class="btn btn-success pull-right"> <i class="fa fa-plus-circle"> </i> New Product </a>
                 </h3>
             </div>
 
@@ -25,10 +25,8 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Product name</th>
-                            <th>Buy-in price</th>
-                            <th>Instock</th>
-                            <th>Discontinued</th>
+                            <th> Product Category </th>
+                            <th>Product Name</th>
                             <th class="text-right"> Actions</th>
                         </tr>
                     </thead>
@@ -37,25 +35,11 @@
                         @foreach ($products as $product)
                             <tr>
                                 <td>{{$product->id}}</td>
+                                <td>{{$product->category->name}}</td>
                                 <td>{{$product->name}}</td>
-                                <td>{{$product->buy_price}}</td>
                                 <td>
-                                    @if ($product->instock == 1) Yes @else No @endif
-                                </td>
-                                <td>
-                                    @if ($product->discontinued == 1) Yes @else No @endif
-                                </td>
-                                <td>
-
-                                    @if ( $product->is_issued_to == null )
-                                        <a href="{{ route('product.issuance.create', $product) }}" class="btn btn-primary pull-right mx-2">Issue</a>
-                                    @else
-                                        <a href="{{ route('product.issuance.create', $product) }}" class="btn btn-primary pull-right disabled mx-2">Issue</a>
-                                    @endif
-
-                                    <a href="/products/{{$product->id}}/edit" class="btn btn-secondary pull-right mx-2"> Stocks </a>
-                                    <a href="/products/{{$product->id}}/edit" class="btn btn-default pull-right mx-2">Edit</a>
-
+                                    <a href="/products/{{$product->id}}/edit" class="btn btn-outline"> <i class="fa fa-pencil"> </i> Edit</a>
+                                    <a href="{{ route('product-stocks.show', $product->id ) }}" class="btn btn-primary mx-2"> Stocks <span class="badge-pill badge-info"> {{ $product->stock->count() }} </span> </a>
                                 </td>
 
                             </tr>

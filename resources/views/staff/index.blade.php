@@ -15,7 +15,7 @@
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Staff
-                        <a href="{{ route('staff.create') }}" class="btn btn-success pull-right"> New Staff </a>
+                        <a href="{{ route('staff.create') }}" class="btn btn-success pull-right"> <i class="fa fa-plus-circle"> </i> New Staff </a>
                     </h3>
                     {{-- <a href="{{ route('staff.create') }}" class="btn btn-success"> New Staff </a> --}}
                 </div>

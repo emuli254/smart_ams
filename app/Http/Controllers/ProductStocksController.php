@@ -2,239 +2,221 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\ProductStock;
+use App\Models\ProductIssuance;
+use App\Models\ProductStock;
+use App\Models\ProductStockIssuance;
 use App\Product;
-use App\OfficeLocation;
-use DB;
+use App\Staff;
+use App\Supplier;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductStocksController extends Controller
 {
-    public function addStock(Request $request)
-		{
-			// validate user input
-			$this->validate($request, [
-				'office_id' => 'required|numeric',
-				'product_id' => 'required|numeric',
-				'quantity' => 'required|numeric'
-			]);
-
-			$location = $request->input('office_id');
-			$product = $request->input('product_id');
-			$quantity = $request->input('quantity');
-
-			// check for existing record
-			$stockrecord = DB::table('product_stocks')->where([
-				['product_id', '=', $product],
-				['office_id', '=', $location],
-			])->get();
-
-			if(!$stockrecord->first()) {
-				// stockrecord doesn't exit, create one
-
-				// create new instance of the model
-				$productstock = new ProductStock;
-
-				$productstock->office_id = $location;
-				$productstock->product_id = $product;
-				$productstock->quantity = $quantity;
-
-				// save the new stock record
-				$productstock->save();
-
-				// redirect to index
-				return redirect('/products')->with('success', 'Stock has been updated successfully!');
-			} else {
-				// record exists, retrieve it
-				$productstock = ProductStock::where([
-					['product_id', '=', $product],
-					['office_id', '=', $location]
-				])->first();
-
-				$newquantity = $productstock->quantity + $quantity;
-
-				// update the stock
-				DB::table('product_stocks')->where([
-					['product_id', '=', $product],
-					['office_id', '=', $location],
-				])->update(['quantity' => $newquantity]);
-
-				// return to index
-				return redirect('/products')->with('success', 'Stock has been updated successfully!');
-			}
-		}
-
-		// TODO: check if stock is there, make this func
-		public function removeStock(Request $request)
-		{
-			// validate user input
-			$this->validate($request, [
-				'office_id' => 'required|numeric',
-				'product_id' => 'required|numeric',
-				'quantity' => 'required|numeric'
-			]);
-
-			$location = $request->input('office_id');
-			$product = $request->input('product_id');
-			$quantity = $request->input('quantity');
-
-			// check for existing record
-			$stockrecord = DB::table('product_stocks')->where([
-				['product_id', '=', $product],
-				['office_id', '=', $location],
-			])->get();
-
-			if(!$stockrecord->first()) {
-				// stockrecord doesn't exit, throw error
-        return redirect('/stock/remove')->with('error', 'This product is not in stock and can not be checked out!');
-			}
-
-      // record exists, retrieve it
-      $productstock = ProductStock::where([
-        ['product_id', '=', $product],
-        ['office_id', '=', $location]
-      ])->first();
-
-      // check if stock is sufficient
-      if($productstock->quantity < $quantity) {
-        // quantity not sufficient, throw error
-        return redirect('/stock/remove')->with('error', 'Product stock is not sufficient to check out that amount of products! (Tried to check out ' . $quantity . ', only ' . $productstock->quantity . ' available)');
-      }
-
-      $newquantity = $productstock->quantity - $quantity;
-
-      // update the stock
-      DB::table('product_stocks')->where([
-        ['product_id', '=', $product],
-        ['office_id', '=', $location],
-      ])->update(['quantity' => $newquantity]);
-
-      // return to index
-      return redirect('/products')->with('success', 'Stock has been updated successfully!');
-		}
-
-    public function moveStock(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-      // validate
-      $this->validate($request, [
-        'office_id_source' => 'required|numeric',
-        'office_id_destination' => 'required|numeric',
-        'product_id' => 'required|numeric',
-        'quantity' => 'required|numeric|gt:0'
-      ]);
+        //
+        // Get all the products
+        $productstocks = ProductStock::all();
 
-      // bind to vars for easier use
-      $source_id = $request->input('office_id_source');
-      $destination_id = $request->input('office_id_destination');
-      $quantity_to_move = $request->input('quantity');
-      $product_id = $request->input('product_id');
+        // Return the index view
+        return view('product-stocks.index')->with('productstocks', $productstocks);
 
-      // check if source and destination are the same
-      if($source_id == $destination_id) {
-        return redirect('/stock/move')->with('error', 'Source and destination location can not be the same!')->withInput();
-      }
-
-      // get stock record for source
-      $source_stock_record = DB::table('product_stocks')->where([
-        ['product_id', '=', $product_id],
-        ['office_id', '=', $source_id]
-      ])->get();
-
-      // check if source location has the product
-      if(!$source_stock_record->first()) {
-        return redirect('/stock/move')->with('error', 'Stock at the source location is not sufficient to move that amount of products!')->withInput();
-      }
-
-      // retrieve source stock record
-      $source_stock_record = ProductStock::where([
-        ['product_id', '=', $product_id],
-        ['office_id', '=', $source_id]
-      ])->first();
-
-      // check if quantity is sufficient
-      if($source_stock_record->quantity < $quantity_to_move) {
-        return redirect('/stock/move')->with('error', 'Stock at the source location is not sufficient to move that amount of products!')->withInput();
-      }
-
-      // calculate new stock
-      $new_source_quantity = $source_stock_record->quantity - $quantity_to_move;
-
-      // check for destination stock record
-      $destination_stock_record = DB::table('product_stocks')->where([
-        ['product_id', '=', $product_id],
-        ['office_id', '=', $destination_id]
-      ])->get();
-
-      // check if it exists
-      if(!$destination_stock_record->first()) {
-        // doesnt exist, create it
-        $destination_stock_record = new ProductStock;
-
-        $destination_stock_record->product_id = $product_id;
-        $destination_stock_record->quantity = $quantity_to_move;
-        $destination_stock_record->office_id = $destination_id;
-
-        $destination_stock_record->save();
-
-        // update source record
-        DB::table('product_stocks')->where([
-          ['product_id', '=', $product_id],
-          ['office_id', '=', $source_id]
-        ])->update(['quantity' => $new_source_quantity]);
-
-        return redirect('/products')->with('succes', 'Stock has been updated successfully!');
-      } else {
-        // update source record
-        DB::table('product_stocks')->where([
-          ['product_id', '=', $product_id],
-          ['office_id', '=', $source_id]
-        ])->update(['quantity' => $new_source_quantity]);
-
-        // get destination record
-        $destination_stock_record = DB::table('product_stocks')->where([
-          ['product_id', '=', $product_id],
-          ['office_id', '=', $destination_id]
-        ])->first();
-
-        $new_destination_quantity = $destination_stock_record->quantity + $quantity_to_move;
-
-        DB::table('product_stocks')->where([
-          ['product_id', '=', $product_id],
-          ['office_id', '=', $destination_id]
-        ])->update(['quantity' => $new_destination_quantity]);
-
-        return redirect('/products')->with('success', 'Stock has been updated successfully!');
-      }
-      return redirect('/products')->with('error', 'An unknown error has occured. Ref: #0012');
     }
 
-		public function addView()
-		{
-			 // get products and office locations
-			 $products = Product::all();
-			 $locations = OfficeLocation::all();
-
-			 // return add stock view
-			 return view('product-stocks.add-products')->with('products', $products)->with('locations', $locations);
-		}
-
-		public function removeView()
-		{
-			 // get products and storage locations
-			 $products = Product::all();
-			 $locations = OfficeLocation::all();
-
-			 // return add stock view
-			 return view('product-stocks.remove-products')->with('products', $products)->with('locations', $locations);
-		}
-
-    public function moveView()
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-       // get products and locations
-       $products = Product::all();
-       $locations = OfficeLocation::all();
+        //
 
-       // return the move stock view
-       return view('product-stocks.move-products')->with('products', $products)->with('locations', $locations);
     }
+
+    public function createStock($product)
+    {
+        $product = Product::find($product);
+        $suppliers = Supplier::all();
+
+        return view('product-stocks.create')->with('product', $product)->with('suppliers', $suppliers);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+        // Validate user input
+        $validator = Validator::make($request->all(), [
+
+            'product_id' => 'required|numeric',
+            'description' => 'required|min:3|max:500',
+            'supplier_id' => 'required|numeric',
+            'serial_part_no' => 'required',
+            'asset_tag_no' => 'required',
+            'buy_price' => 'required|numeric',
+            'in_stock' => 'required|numeric|between:0,1',
+            'discontinued' => 'required|numeric|between:0,1',
+
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+
+            // return response()->json($validator->errors(), 422);
+            return redirect()->back()->withErrors($errors);
+
+        } else {
+            // Save the product
+            // ...
+
+            // Create new instance of the model
+            $productstock = new ProductStock;
+
+            $productstock->product_id = $request->input('product_id');
+            $productstock->description = $request->input('description');
+            $productstock->supplier_id = $request->input('supplier_id');
+            $productstock->serial_part_no = $request->input('serial_part_no');
+            $productstock->asset_tag_no = $request->input('asset_tag_no');
+            $productstock->buy_price = $request->input('buy_price');
+            $productstock->in_stock = $request->input('in_stock');
+            $productstock->discontinued = $request->input('discontinued');
+
+            // Save the new product
+            $productstock->save();
+
+            // Return to index view with success message
+            return redirect()->route('product-stocks.show', $productstock->product_id)->with('success', 'Product Stock has been created!');
+        }
+
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+        // Get all the products
+        $product = Product::find($id);
+        $productstocks = ProductStock::where('product_id', $id)->get();
+
+        // Return the index view
+        return view('product-stocks.index')->with('productstocks', $productstocks)->with('product', $product);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+
+        $productstock = ProductStock::find($id);
+
+        // $product = Product::find($product);
+        $suppliers = Supplier::all();
+
+        return view('product-stocks.edit')->with('productstock', $productstock)->with('suppliers', $suppliers);
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+
+        $productstock = ProductStock::find($id) ;
+
+        // Validate user input
+        $validator = Validator::make($request->all(), [
+
+            'product_id' => 'required|numeric',
+            'description' => 'required|min:3|max:500',
+            'supplier_id' => 'required|numeric',
+            'serial_part_no' => 'required',
+            'asset_tag_no' => 'required',
+            'buy_price' => 'required|numeric',
+            'in_stock' => 'required|numeric|between:0,1',
+            'discontinued' => 'required|numeric|between:0,1',
+
+        ]);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+
+            // return response()->json($validator->errors(), 422);
+            return redirect()->back()->withErrors($errors);
+
+        } else {
+
+            // Save the product
+            $productstock->product_id = $request->input('product_id');
+            $productstock->description = $request->input('description');
+            $productstock->supplier_id = $request->input('supplier_id');
+            $productstock->serial_part_no = $request->input('serial_part_no');
+            $productstock->asset_tag_no = $request->input('asset_tag_no');
+            $productstock->buy_price = $request->input('buy_price');
+            $productstock->in_stock = $request->input('in_stock');
+            $productstock->discontinued = $request->input('discontinued');
+
+            // Save the new product
+            $productstock->save();
+
+            // Return to index view with success message
+            return redirect()->route('product-stocks.show', $productstock->product_id )->with('success', 'Product Stock Edited Successfully!');
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+
+    public function issue($productstock)
+    {
+        $productstock = ProductStock::find($productstock);
+        $staffs = Staff::all();
+        return view('product-issuance.create')->with('product', $productstock)->with('staffs', $staffs);
+    }
+
+    public function saveIssue(Request $request)
+    {
+        // Validate user input
+        $this->validate($request, [
+            'productstock_id' => 'required',
+            'staff_id' => 'required',
+            'user_id' => 'required'
+          ]);
+
+        // Create new instance of the model
+        $productissue = new ProductStockIssuance;
+
+        $productissue->productstock_id = $request->input('productstock_id');
+        $productissue->staff_id = $request->input('staff_id');
+        $productissue->issued_by_id = $request->input('user_id');
+
+        // Save the new product
+        $productissue->save();
+
+           // Return to index view with success message
+        return redirect()->route('product-stocks.show', $productissue->productstock_id )->with('success', 'Product has been issued successfully!');
+
+
+    }
+
+
+
+
 }

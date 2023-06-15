@@ -10,17 +10,17 @@ class Product extends Model
     public $timestamps = true;
 
     public function category()
-		{
-			return $this->belongsTo('App\ProductCategory');
-		}
+    {
+        return $this->belongsTo('App\ProductCategory');
+    }
 
     public function stock()
     {
-      return $this->hasMany('App\ProductStock');
+      return $this->hasMany('App\Models\ProductStock');
     }
 
-    public function is_issued_to()
-    {
-      return $this->hasOne('App\Models\ProductIssuance', 'product_id', 'id' );
-    }
+    // public function is_issued_to()
+    // {
+    //   return $this->hasOne('App\Models\ProductIssuance', 'product_id', 'id' );
+    // }
 }

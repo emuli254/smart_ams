@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductIssuance extends Model
+class ProductStockIssuance extends Model
 {
     use HasFactory;
 
     // Table Name
-    protected $table = 'product_issuances';
+    protected $table = 'product_stock_issuances';
 
     // Primary Key
     protected $primaryKey = 'id';
 
-    protected $fillable = [ 'staff_id', 'product_id', 'issued_by_id' ];
+    protected $fillable = [ 'staff_id', 'productstock_id', 'issued_by_id' ];
 
     // Timestamps
     public $timestamps = 'true';
@@ -29,6 +29,8 @@ class ProductIssuance extends Model
     // {
     //   return $this->belongsTo('App\Staff', 'staff_id', 'id' );
     // }
+
+
 
 
 }

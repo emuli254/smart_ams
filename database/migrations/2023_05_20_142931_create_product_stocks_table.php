@@ -14,11 +14,17 @@ class CreateProductStocksTable extends Migration
     public function up()
     {
         Schema::create('product_stocks', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('product_id')->unsigned();
-           // $table->integer('office_location_id')->unsigned();
-           // $table->integer('quantity')->after('office_location_id');
-           // $table->foreign('product_id')->references('id')->on('products');
-           // $table->foreign('office_location_id')->references('id')->on('office_locations');
+            $table->mediumText('description');
+            $table->mediumText('serial_part_no');
+            $table->mediumText('asset_tag_no');
+            $table->integer('supplier_id')->unsigned();
+            $table->decimal('buy_price', 8, 2);
+            // $table->mediumText('buy_date');
+            $table->boolean('in_stock');
+            $table->boolean('discontinued');
+
             $table->timestamps();
         });
     }
