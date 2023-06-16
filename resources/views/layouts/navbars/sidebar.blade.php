@@ -47,7 +47,7 @@ Tip 2: you can also add an image using data-image tag
             </li>
 
             <li class="nav-item @if($activePage == 'table') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'products')}}">
+                <a class="nav-link" href="{{route('page.index', 'items')}}">
                     <i class="nc-icon nc-notes"></i>
                     <p>{{ __("Asset List") }}</p>
                 </a>
@@ -59,7 +59,7 @@ Tip 2: you can also add an image using data-image tag
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'icons') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'product-categories')}}">
+                <a class="nav-link" href="{{route('page.index', 'item-categories')}}">
                     <i class="nc-icon nc-atom"></i>
                     <p>{{ __("Asset Categories") }}</p>
                 </a>

@@ -37,21 +37,21 @@ Route::get('/', function () {
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
-// Route::resource('products', 'ProductsController')->middleware('auth');
-// Route::resource('product-categories', 'ProductCategoriesController')->middleware('auth');
+// Route::resource('items', 'ItemsController')->middleware('auth');
+// Route::resource('item-categories', 'ItemCategoriesController')->middleware('auth');
 // Route::resource('suppliers', 'SuppliersController')->middleware('auth');
 // Route::resource('office-locations', 'OfficeLocationsController')->middleware('auth');
 // Route::resource('staff', 'StaffController')->middleware('auth');
 // Route::resource('orders', 'OrdersController')->middleware('auth');
 
-// Route::get('/stock/add', 'ProductStocksController@addView')->middleware('auth');
-// Route::post('/stock/add', 'ProductStocksController@addStock')->middleware('auth');
+// Route::get('/stock/add', 'ItemStocksController@addView')->middleware('auth');
+// Route::post('/stock/add', 'ItemStocksController@addStock')->middleware('auth');
 
-// Route::get('/stock/remove', 'ProductStocksController@removeView')->middleware('auth');
-// Route::post('/stock/remove', 'ProductStocksController@removeStock')->middleware('auth');
+// Route::get('/stock/remove', 'ItemStocksController@removeView')->middleware('auth');
+// Route::post('/stock/remove', 'ItemStocksController@removeStock')->middleware('auth');
 
-// Route::get('/stock/move', 'ProductStocksController@moveView')->middleware('auth');
-// Route::post('/stock/move', 'ProductStocksController@moveStock')->middleware('auth');
+// Route::get('/stock/move', 'ItemStocksController@moveView')->middleware('auth');
+// Route::post('/stock/move', 'ItemStocksController@moveStock')->middleware('auth');
 
 // Route::get('/users/create', 'UsersController@create')->middleware('auth');
 // Route::post('/users/create', 'UsersController@store')->middleware('auth');
@@ -73,17 +73,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::patch('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::patch('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 
-    // Products
+    // Items
 
-	Route::resource('product-categories', 'App\Http\Controllers\ProductCategoriesController')->middleware('auth');
-    Route::resource('products', 'App\Http\Controllers\ProductsController')->middleware('auth');
+	Route::resource('item-categories', 'App\Http\Controllers\ItemCategoriesController')->middleware('auth');
+    Route::resource('items', 'App\Http\Controllers\ItemsController')->middleware('auth');
 
-    Route::resource('product-stocks', 'App\Http\Controllers\ProductStocksController')->middleware('auth');
-    Route::get('product/stock/{product}', [ 'as' => 'product.stocks.create', 'uses' => 'App\Http\Controllers\ProductStocksController@createStock' ]);
-    // Route::post('product/stock/', ['as' => 'product.stock', 'uses' => 'App\Http\Controllers\ProductsController@saveIssue']);
+    Route::resource('item-stocks', 'App\Http\Controllers\ItemStocksController')->middleware('auth');
+    Route::get('item/stock/{item}', [ 'as' => 'item.stocks.create', 'uses' => 'App\Http\Controllers\ItemStocksController@createStock' ]);
+    // Route::post('item/stock/', ['as' => 'item.stock', 'uses' => 'App\Http\Controllers\ItemsController@saveIssue']);
 
-    Route::get('product-stocks/issue/{product}', [ 'as' => 'productstock.issuance.create', 'uses' => 'App\Http\Controllers\ProductStocksController@issue' ]);
-    Route::post('product-stocks/issue/', ['as' => 'productstock.issuance', 'uses' => 'App\Http\Controllers\ProductStocksController@saveIssue']);
+    Route::get('item-stocks/issue/{item}', [ 'as' => 'itemstock.issuance.create', 'uses' => 'App\Http\Controllers\ItemStocksController@issue' ]);
+    Route::post('item-stocks/issue/', ['as' => 'itemstock.issuance', 'uses' => 'App\Http\Controllers\ItemStocksController@saveIssue']);
 
 
 
@@ -93,7 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('orders', 'App\Http\Controllers\OrdersController')->middleware('auth');
 
 
-    // Route::resource('product-issuance', 'App\Http\Controllers\ProductIssuanceController');
+    // Route::resource('item-issuance', 'App\Http\Controllers\ItemIssuanceController');
 });
 
 Route::group(['middleware' => 'auth'], function () {

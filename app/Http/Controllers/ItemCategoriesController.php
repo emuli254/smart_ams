@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\ProductCategory;
-use App\Product;
+use App\Models\ItemCategory;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
-class ProductCategoriesController extends Controller
+class ItemCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,11 @@ class ProductCategoriesController extends Controller
      */
     public function index()
     {
-        // Get all the product categories
-        $categories = ProductCategory::all();
+        // Get all the item categories
+        $categories = ItemCategory::all();
 
         // Return the index view
-        return view('product-categories.index')->with('categories', $categories);
+        return view('item-categories.index')->with('categories', $categories);
     }
 
     /**
@@ -30,7 +30,7 @@ class ProductCategoriesController extends Controller
     public function create()
     {
         // Return the create view
-        return view('product-categories.create');
+        return view('item-categories.create');
     }
 
     /**
@@ -43,11 +43,11 @@ class ProductCategoriesController extends Controller
     {
         // Validate user input
         $this->validate($request, [
-          'name' => 'required|min:3|max:150|unique:product_categories'
+          'name' => 'required|min:3|max:150|unique:item_categories'
         ]);
 
         // Create a new instance of the model
-        $category = new ProductCategory;
+        $category = new ItemCategory;
 
         $category->name = $request->input('name');
 
@@ -55,74 +55,74 @@ class ProductCategoriesController extends Controller
         $category->save();
 
         // Return to the index with a success message
-        return redirect('/product-categories')->with('success', 'Product category has been created successfully!');
+        return redirect('/item-categories')->with('success', 'Item category has been created successfully!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\ProductCategory  $productCategory
+     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
-    public function show($productCategory)
+    public function show($itemCategory)
     {
-        // Get the product category and its products
-        $category = ProductCategory::find($productCategory);
-        $products = Product::where('product_category_id', $category->id)->get();
+        // Get the item category and its items
+        $category = ItemCategory::find($itemCategory);
+        $items = Item::where('item_category_id', $category->id)->get();
 
         // Return the show view
-        return view('product-categories.show')->with('category', $category)->with('products', $products);
+        return view('item-categories.show')->with('category', $category)->with('items', $items);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ProductCategory  $productCategory
+     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit($productCategory)
+    public function edit($itemCategory)
     {
-        // Get the product category
-        $category = ProductCategory::find($productCategory);
+        // Get the item category
+        $category = ItemCategory::find($itemCategory);
 
         // Return the edit view
-        return view('product-categories.edit')->with('category', $category);
+        return view('item-categories.edit')->with('category', $category);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ProductCategory  $productCategory
+     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $productCategory)
+    public function update(Request $request, $itemCategory)
     {
-        // Get the product category
-        $category = ProductCategory::find($productCategory);
+        // Get the item category
+        $category = ItemCategory::find($itemCategory);
 
         // Validate user input
         $this->validate($request, [
-          'name' => 'required|min:3|max:150|unique:product_categories,name,'.$category->id,
+          'name' => 'required|min:3|max:150|unique:item_categories,name,'.$category->id,
         ]);
 
-        // Edit the product category
+        // Edit the item category
         $category->name = $request->input('name');
 
         // Save the changes
         $category->save();
 
         // Return to index view with success message
-        return redirect('/product-categories')->with('success', 'Product category has been edited and changes were saved!');
+        return redirect('/item-categories')->with('success', 'Item category has been edited and changes were saved!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ProductCategory  $productCategory
+     * @param  \App\ItemCategory  $itemCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductCategory $productCategory)
+    public function destroy(ItemCategory $itemCategory)
     {
         //
     }

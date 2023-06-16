@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_stock_issuances', function (Blueprint $table) {
+        Schema::create('item_stock_issuances', function (Blueprint $table) {
             // $table->id();
 
             $table->increments('id');
             $table->integer('staff_id')->unsigned();
-            $table->integer('productstock_id')->unsigned();
+            $table->integer('itemstock_id')->unsigned();
             $table->integer('issued_by_id')->unsigned();
             $table->timestamps();
         });
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_stock_issuances');
+        Schema::dropIfExists('item_stock_issuances');
     }
 };

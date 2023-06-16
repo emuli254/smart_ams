@@ -45,27 +45,27 @@
 							</thead>
 							<tbody>
 
-								@foreach ($products as $product)
+								@foreach ($items as $item)
 									<tr>
-										<td>{{$product->id}}</td>
-										<td>{{$product->name}}</td>
-										<td>{{$product->sales_price}}</td>
-										<td>{{$product->buy_price}}</td>
+										<td>{{$item->id}}</td>
+										<td>{{$item->name}}</td>
+										<td>{{$item->sales_price}}</td>
+										<td>{{$item->buy_price}}</td>
 										<td>
-											@if ($product->instock == 1)
+											@if ($item->instock == 1)
 												Yes
 											@else
 												No
 											@endif
 										</td>
 										<td>
-											@if ($product->discontinued == 1)
+											@if ($item->discontinued == 1)
 												Yes
 											@else
 												No
 											@endif
 										</td>
-										<td><a href="/products/{{$product->id}}/edit" class="btn btn-default">Edit</a></td>
+										<td><a href="/items/{{$item->id}}/edit" class="btn btn-default">Edit</a></td>
 									</tr>
 								@endforeach
 

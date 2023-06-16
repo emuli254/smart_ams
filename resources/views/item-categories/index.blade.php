@@ -1,9 +1,9 @@
-@extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'ODPP AMS | Product Categories', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
+@extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'ODPP AMS | Item Categories', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 
-@section('title', 'Product Categories')
+@section('title', 'Item Categories')
 
 @section('content_header')
-    <h1>Product categories</h1>
+    <h1>Item categories</h1>
 @stop
 
 @section('content')
@@ -14,8 +14,8 @@
         <div class="col-sm-12">
             <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Product categories
-                        <a href="{{ route('product-categories.create') }}" class="btn btn-success pull-right"> New Product Category </a>
+                    <h3 class="box-title">Item categories
+                        <a href="{{ route('item-categories.create') }}" class="btn btn-success pull-right"> New Item Category </a>
                     </h3>
                 </div>
                 <div class="box-body">
@@ -32,8 +32,8 @@
                             @foreach ($categories as $category)
                                 <tr>
                                     <td>{{$category->id}}</td>
-                                    <td><a href="/product-categories/{{$category->id}}">{{$category->name}}</a></td>
-                                    <td><a href="/product-categories/{{$category->id}}/edit" class="btn btn-default">Edit</a></td>
+                                    <td><a href="/item-categories/{{$category->id}}">{{$category->name}}</a></td>
+                                    <td><a href="/item-categories/{{$category->id}}/edit" class="btn btn-default">Edit</a></td>
                                 </tr>
                             @endforeach
 

@@ -1,10 +1,10 @@
 {{-- @extends('adminlte::page') --}}
-@extends('layouts.app', ['activePage' => 'edit', 'title' => 'Issue Product', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
+@extends('layouts.app', ['activePage' => 'edit', 'title' => 'Issue Item', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 
-@section('title', 'New product')
+@section('title', 'New item')
 
 @section('content_header')
-    <h1> Issue product </h1>
+    <h1> Issue item </h1>
 @stop
 
 @section('content')
@@ -16,13 +16,14 @@
 
             <div class="card-header">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Issue product {{ $product->name }}</h3>
+                    <h3 class="box-title">Issue item {{ $itemstock->item->name }}</h3>
                 </div>
 
                 <div class="card-body">
-                    {!! Form::open( array( 'route' => 'productstock.issuance' , 'method' => 'POST' )) !!}
+                    {!! Form::open( array( 'route' => 'itemstock.issuance' , 'method' => 'POST' )) !!}
 
-                    <input type="hidden" name="productstock_id" id="productstock_id" value="{{ $product->id }}">
+                    <input type="hidden" name="itemstock_id" id="itemstock_id" value="{{ $itemstock->id }}">
+                    <input type="hidden" name="item_id" id="item_id" value="{{ $itemstock->item->id }}">
                     <input type="hidden" name="user_id" id="user_id" value="{{ auth()->user()->id }}">
 
                     <div class="row">
@@ -35,7 +36,7 @@
                         </div>
                     </div>
 
-                    {{ Form::submit('Issue Product', ['class' => 'pull-right btn btn-default']) }}
+                    {{ Form::submit('Issue Item', ['class' => 'pull-right btn btn-default']) }}
 
                     {!! Form::close() !!}
                 </div>

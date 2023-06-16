@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductStock extends Model
+class ItemStock extends Model
 {
-		protected $table = 'product_stocks';
+		protected $table = 'item_stocks';
 		public $timestamps = true;
 
-		public function product()
+		public function item()
 		{
-			return $this->belongsTo('App\Product');
+			return $this->belongsTo('App\Models\Item');
 		}
 
         public function is_supplied_by()
@@ -21,7 +21,7 @@ class ProductStock extends Model
 
         public function is_issued_to()
         {
-            return $this->hasOne('App\Models\ProductStockIssuance', 'productstock_id', 'id' );
+            return $this->hasOne('App\Models\ItemStockIssuance', 'itemstock_id', 'id' );
         }
 
 }

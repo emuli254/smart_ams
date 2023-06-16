@@ -1,10 +1,10 @@
 {{-- @extends('adminlte::page') --}}
-@extends('layouts.app', ['activePage' => 'edit', 'title' => 'Create Product Stock', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
+@extends('layouts.app', ['activePage' => 'edit', 'title' => 'Create Item Stock', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 
-@section('title', 'New product')
+@section('title', 'New item')
 
 @section('content_header')
-    <h1>New Product Stock</h1>
+    <h1>New Item Stock</h1>
 @stop
 
 @section('content')
@@ -18,19 +18,19 @@
             <div class="box box-danger">
 
                 <div class="box-header with-border">
-                    <h3 class="box-title">New Product Stock for {{ $product->name }} </h3>
+                    <h3 class="box-title">New Item Stock for {{ $item->name }} </h3>
                 </div>
                 <div class="box-body">
 
-                    {!! Form::open( array( 'route' => 'product-stocks.store' , 'method' => 'POST' )) !!}
+                    {!! Form::open( array( 'route' => 'item-stocks.store' , 'method' => 'POST' )) !!}
 
-                    <input type="hidden" name="product_id" id="product_id" value="{{ $product->id }}">
+                    <input type="hidden" name="item_id" id="item_id" value="{{ $item->id }}">
 
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                            {{Form::label('description', 'Product description')}}
-                            {{Form::textarea('description', '', ['id' => 'ck-textarea', 'class' => 'form-control ck-textarea', 'style' => 'resize: vertical', 'placeholder' => 'Product description'])}}
+                            {{Form::label('description', 'Item description')}}
+                            {{Form::textarea('description', '', ['id' => 'ck-textarea', 'class' => 'form-control ck-textarea', 'style' => 'resize: vertical', 'placeholder' => 'Item description'])}}
                             </div>
                         </div>
                     </div>
