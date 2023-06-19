@@ -8,8 +8,10 @@
 @stop
 
 @section('content')
+
 	@include('includes.messages')
-    <div class="row">
+
+    <div class="row mx-2">
 			<div class="col-sm-3">
 				<div class="box box-danger">
 					<div class="box-header with-border">
@@ -47,26 +49,26 @@
 							</thead>
 							<tbody>
 
-								@foreach ($products as $product)
+								@foreach ($itemstocks as $itemstock)
 									<tr>
-										<td>{{$product->id}}</td>
-										<td>{{$product->name}}</td>
-										<td>{{$product->buy_price}}</td>
+										<td>{{$itemstock->id}}</td>
+										<td>{{$itemstock->name}}</td>
+										<td>{{$itemstock->buy_price}}</td>
 										<td>
-											@if ($product->instock == 1)
+											@if ($itemstock->in_stock == 1)
 												Yes
 											@else
 												No
 											@endif
 										</td>
 										<td>
-											@if ($product->discontinued == 1)
+											@if ($itemstock->discontinued == 1)
 												Yes
 											@else
 												No
 											@endif
 										</td>
-										<td><a href="/products/{{$product->id}}/edit" class="btn btn-default">Edit</a></td>
+										<td><a href="{{ route('item-stocks.edit', $itemstock->id ) }}" class="btn btn-default">Edit</a></td>
 									</tr>
 								@endforeach
 

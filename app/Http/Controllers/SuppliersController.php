@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ItemStock;
 use App\Supplier;
 use App\Product;
 use Illuminate\Http\Request;
@@ -70,12 +71,15 @@ class SuppliersController extends Controller
     {
         // get supplier and products
         $supplier = Supplier::find($supplier_id);
-        $products = Product::where([
-          ['supplier_id', '=', $supplier_id],
-        ])->get();
+
+        // $products = Product::where([
+        //   ['supplier_id', '=', $supplier_id],
+        // ])->get();
+
+        $itemstocks = ItemStock::where('supplier_id', $supplier_id)->get();
 
         // return view
-        return view('suppliers.show')->with('supplier', $supplier)->with('products', $products);
+        return view('suppliers.show')->with('supplier', $supplier)->with('itemstocks', $itemstocks);
     }
 
     /**

@@ -1,10 +1,19 @@
-@extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'ODPP Asset Management System by Erick Muli', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
+@extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'ODPP AMS | Dashboard', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 
 @section('content')
     <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-4">
+
+                    <div class="card">
+                        <div class="card-header"> Total Stocks </div>
+                        <div class="card-body">
+
+                        </div>
+
+                    </div>
+
                     <div class="card ">
                         <div class="card-header ">
                             <h4 class="card-title">{{ __('Matters Handled') }}</h4>
@@ -23,6 +32,8 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
                 <div class="col-md-8">
                     <div class="card ">

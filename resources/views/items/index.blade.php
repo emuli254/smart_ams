@@ -38,7 +38,7 @@
                                 <td>{{$item->category->name}}</td>
                                 <td>{{$item->name}}</td>
                                 <td>
-                                    <a href="/items/{{$item->id}}/edit" class="btn btn-outline"> <i class="fa fa-pencil"> </i> Edit</a>
+                                    <a href="{{ route('items.edit', $item->id ) }}" class="btn btn-outline"> <i class="fa fa-pencil"> </i> Edit</a>
                                     <a href="{{ route('item-stocks.show', $item->id ) }}" class="btn btn-primary mx-2"> Stocks <span class="badge-pill badge-info"> {{ $item->stock->count() }} </span> </a>
                                 </td>
 

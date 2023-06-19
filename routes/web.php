@@ -1,7 +1,7 @@
 <?php
 
-// use Symfony\Component\Routing\Route;
-// use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 
 /*
@@ -75,8 +75,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Items
 
-	Route::resource('item-categories', 'App\Http\Controllers\ItemCategoriesController')->middleware('auth');
-    Route::resource('items', 'App\Http\Controllers\ItemsController')->middleware('auth');
+	Route::resource('item-categories', 'App\Http\Controllers\ItemCategoriesController');
+    Route::resource('items', 'App\Http\Controllers\ItemsController');
 
 
     Route::resource('item-stocks', 'App\Http\Controllers\ItemStocksController')->middleware('auth');
@@ -91,14 +91,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('item-stocks/move/', ['as' => 'itemstock.save.move', 'uses' => 'App\Http\Controllers\ItemStocksController@saveMove']);
 
 
-	Route::resource('suppliers', 'App\Http\Controllers\SuppliersController')->middleware('auth');
-	Route::resource('office-locations', 'App\Http\Controllers\OfficeLocationsController')->middleware('auth');
-	Route::resource('staff', 'App\Http\Controllers\StaffController')->middleware('auth');
-	Route::resource('orders', 'App\Http\Controllers\OrdersController')->middleware('auth');
+	Route::resource('suppliers', 'App\Http\Controllers\SuppliersController');
+	Route::resource('office-locations', 'App\Http\Controllers\OfficeLocationsController');
+	Route::resource('staff', 'App\Http\Controllers\StaffController');
+	Route::resource('orders', 'App\Http\Controllers\OrdersController');
+
+
+    Route::get('{page}', ['as' => 'page.index', 'uses' => 'App\Http\Controllers\PageController@index']);
 
 });
 
-Route::group(['middleware' => 'auth'], function () {
-	Route::get('{page}', ['as' => 'page.index', 'uses' => 'App\Http\Controllers\PageController@index']);
-});
+// Route::group(['middleware' => 'auth'], function () {
+// 	Route::get('{page}', ['as' => 'page.index', 'uses' => 'App\Http\Controllers\PageController@index']);
+// });
 

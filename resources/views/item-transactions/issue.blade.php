@@ -36,9 +36,13 @@
                         </div>
                     </div>
 
-                    {{ Form::submit('Issue Item', ['class' => 'pull-right btn btn-default']) }}
+                    <div class="row">
+                        <div class="col-sm-12">
+                        {{ Form::submit('Issue Item', ['class' => 'pull-right btn btn-default']) }}
+                        {!! Form::close() !!}
+                        </div>
+                    </div>
 
-                    {!! Form::close() !!}
                 </div>
             </div>
 

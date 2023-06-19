@@ -93,10 +93,14 @@
                         </div>
                     </div>
 
-                {{ Form::hidden('_method', 'PUT') }}
-                {{ Form::submit('Save Stock Changes', ['class' => 'pull-right btn btn-default']) }}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {{ Form::hidden('_method', 'PUT') }}
+                            {{ Form::submit('Save Stock Changes', ['class' => 'pull-right btn btn-default']) }}
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
 
-                {!! Form::close() !!}
                 </div>
             </div>
 		</div>

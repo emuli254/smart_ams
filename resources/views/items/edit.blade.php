@@ -44,10 +44,13 @@
                 </div>
                 </div>
 
-                {{ Form::hidden('_method', 'PUT') }}
-				{{ Form::submit('Save changes', ['class' => 'btn btn-default pull-right']) }}
-
-				{!! Form::close() !!}
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ Form::hidden('_method', 'PUT') }}
+                        {{ Form::submit('Save changes', ['class' => 'btn btn-default pull-right']) }}
+                        {!! Form::close() !!}
+                    </div>
+                </div>
 
             </div>
         </div>
