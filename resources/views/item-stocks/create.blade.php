@@ -1,5 +1,5 @@
 {{-- @extends('adminlte::page') --}}
-@extends('layouts.app', ['activePage' => 'edit', 'title' => 'Create Item Stock', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
+@extends('layouts.app', ['activePage' => 'edit', 'title' => 'ODPP AMS | Create Item Stock', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 
 @section('title', 'New item')
 
@@ -39,8 +39,8 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                            {{Form::label('supplier_id', 'Supplier')}}
-                            {{Form::select('supplier_id', $suppliers->pluck('name', 'id'), null, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Supplier'])}}
+                                {{Form::label('supplier_id', 'Supplier')}}
+                                {{Form::select('supplier_id', $suppliers->pluck('name', 'id'), null, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Supplier'])}}
                             <p>Is the supplier you're looking for not in this list? Add them <a target="_blank" href="/suppliers/create">here</a>.</p>
                             </div>
                         </div>
@@ -72,18 +72,26 @@
                     </div>
 
                     <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                        {{Form::label('in_stock', 'In stock')}}
-                        {{Form::select('in_stock', [0 => 'No', 1 => 'Yes'], null, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Please Select One'])}}
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                {{Form::label('select_office', 'Select Office')}}
+                                {{Form::select('select_office', $office_locations->pluck('name', 'id'), null, ['id' => 'select_office', 'class' => 'form-control select_office', 'placeholder' => '-- Select Office --'])}}
+                            <p>Is the supplier you're looking for not in this list? Add them <a target="_blank" href="{{ route('office-locations.create') }}">here</a>.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                        {{Form::label('discontinued', 'Discontinued')}}
-                        {{Form::select('discontinued', [0 => 'No', 1 => 'Yes'], null, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Discontinued'])}}
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            {{Form::label('in_stock', 'In stock')}}
+                            {{Form::select('in_stock', [0 => 'No', 1 => 'Yes'], null, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Please Select One'])}}
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            {{Form::label('discontinued', 'Discontinued')}}
+                            {{Form::select('discontinued', [0 => 'No', 1 => 'Yes'], null, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Discontinued'])}}
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -101,6 +109,7 @@
 
 @section('js')
   <script src="{{asset('js/render_select2.js')}}" charset="utf-8"></script>
+  {{-- <script src="{{asset('js/render_select2.js')}}" charset="utf-8"></script> --}}
   <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
   <script src="{{asset('js/render_ckeditor.js')}}" charset="utf-8"></script>
 @endsection

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\OfficeLocation;
-use App\ProductStock;
+use App\Models\ItemStock;
+use App\Models\OfficeLocation;
 use Illuminate\Http\Request;
 
 class OfficeLocationsController extends Controller
@@ -50,7 +50,7 @@ class OfficeLocationsController extends Controller
           'building' => 'required|min:3|max:150',
           'office_code' => 'required|min:1|max:150'
         ]);
-        
+
         // Create a new instance of the model
         $location = new OfficeLocation;
 
@@ -74,13 +74,13 @@ class OfficeLocationsController extends Controller
      * @param  \App\OfficeLocation  $OfficeLocation
      * @return \Illuminate\Http\Response
      */
-    public function show($OfficeLocation)
+    public function show($officeLocation)
     {
         // get the Office location and its products
-        $location = OfficeLocation::find($OfficeLocation);
-        $stocks = ProductStock::where([
-          ['office_location_id', '=', $OfficeLocation],
-          ['quantity', '>', 0],
+        $location = OfficeLocation::find($officeLocation);
+        $stocks = ItemStock::where([
+          ['office_location_id', '=', $officeLocation],
+        //   ['quantity', '>', 0],
         ])->get();
 
         // return view

@@ -78,13 +78,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('item-categories', 'App\Http\Controllers\ItemCategoriesController')->middleware('auth');
     Route::resource('items', 'App\Http\Controllers\ItemsController')->middleware('auth');
 
+
     Route::resource('item-stocks', 'App\Http\Controllers\ItemStocksController')->middleware('auth');
     Route::get('item/stock/{item}', [ 'as' => 'item.stocks.create', 'uses' => 'App\Http\Controllers\ItemStocksController@createStock' ]);
-    // Route::post('item/stock/', ['as' => 'item.stock', 'uses' => 'App\Http\Controllers\ItemsController@saveIssue']);
 
     Route::get('item-stocks/issue/{item}', [ 'as' => 'itemstock.issuance.create', 'uses' => 'App\Http\Controllers\ItemStocksController@issue' ]);
     Route::post('item-stocks/issue/', ['as' => 'itemstock.issuance', 'uses' => 'App\Http\Controllers\ItemStocksController@saveIssue']);
 
+    Route::post('item-stocks/return/{itemstock}', ['as' => 'itemstock.return', 'uses' => 'App\Http\Controllers\ItemStocksController@returnStock']);
+
+    Route::get('item-stocks/move/{item}', [ 'as' => 'itemstock.move', 'uses' => 'App\Http\Controllers\ItemStocksController@move' ]);
+    Route::post('item-stocks/move/', ['as' => 'itemstock.save.move', 'uses' => 'App\Http\Controllers\ItemStocksController@saveMove']);
 
 
 	Route::resource('suppliers', 'App\Http\Controllers\SuppliersController')->middleware('auth');
@@ -92,8 +96,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('staff', 'App\Http\Controllers\StaffController')->middleware('auth');
 	Route::resource('orders', 'App\Http\Controllers\OrdersController')->middleware('auth');
 
-
-    // Route::resource('item-issuance', 'App\Http\Controllers\ItemIssuanceController');
 });
 
 Route::group(['middleware' => 'auth'], function () {

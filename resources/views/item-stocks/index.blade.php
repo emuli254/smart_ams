@@ -32,6 +32,7 @@
                             <th>Supplier</th>
                             <th>Buy-in price</th>
                             <th>Instock</th>
+                            <th>Location</th>
                             <th>Discontinued</th>
                             <th class="text-right"> Actions</th>
                         </tr>
@@ -50,19 +51,38 @@
                                 <td>
                                     @if ($itemstock->in_stock == 1) Yes @else No @endif
                                 </td>
+                                <td> @if ( $itemstock->is_located_at()->exists() )  {{ $itemstock->is_located_at->name }} @else <i class=""> N/A </i> @endif </td>
+
                                 <td>
                                     @if ($itemstock->discontinued == 1) Yes @else No @endif
                                 </td>
 
                                 <td>
-                                    <a href="{{ route('item-stocks.edit', $itemstock->id) }}" class="btn btn-default mx-2"> <i class="fa fa-pencil"> </i> Edit</a>
+                                    <div class="btn-group">
+                                        <a href="{{ route('item-stocks.edit', $itemstock->id) }}" class="btn btn-default mx-2"> <i class="fa fa-pencil"> </i> Edit</a>
 
-                                    @if ( $itemstock->is_issued_to == null )
-                                        <a href="{{ route('itemstock.issuance.create', $itemstock) }}" class="btn btn-primary mx-2"> <i class="fa fa-user-circle"> </i> Issue</a>
-                                    @else
-                                        <a href="{{ route('itemstock.issuance.create', $itemstock) }}" class="btn btn-primary disabled mx-2"> <i class="fa fa-check-circle"> </i> Issue</a>
-                                    @endif
+                                        @if ( $itemstock->is_issued_to == null || $itemstock->is_available($itemstock->id) == 1 )
+                                            <a href="{{ route('itemstock.issuance.create', $itemstock) }}" class="btn btn-primary mx-2"> <i class="fa fa-user-circle"> </i> Issue</a>
 
+                                        @elseif ( $itemstock->is_issued_to != null )
+
+                                            {!! Form::model( $itemstock, ['route' => ['itemstock.return', $itemstock->id], 'method' => 'POST' ]) !!}
+                                                @csrf
+                                                <input type="hidden" name="item_id" id="item_id" value="{{ $itemstock->item_id }}">
+                                                <input type="hidden" name="itemstock_id" id="itemstock_id" value="{{ $itemstock->id }}">
+                                                <input type="hidden" name="user_id" id="user_id" value="{{ auth()->user()->id }}">
+                                                <input type="hidden" name="staff_id" id="staff_id" value="{{ $itemstock->is_issued_to->staff_id }}">
+                                                <input type="hidden" name="location_id" id="location_id" value="{{ $itemstock->office_location_id }}">
+
+                                                <button class="btn btn-primary mx-1"> <i class="fa fa-reply"></i> Return </button>
+                                            {{-- {{ Form::submit('Return', ['class' => 'btn btn-primary mx-2']) }} --}}
+                                            {!! Form::close() !!}
+
+                                        @endif
+
+                                        <a href="{{ route('itemstock.move', $itemstock->id) }}" class="btn btn-success mx-2"> <i class="fa fa-map-pin"> </i> Move </a>
+
+                                    </div>
                                 </td>
 
                             </tr>

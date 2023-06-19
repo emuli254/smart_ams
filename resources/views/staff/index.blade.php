@@ -46,7 +46,7 @@
                                     <td>{{$staff->phone}}</td>
                                     <td>{{$staff->department}}</td>
                                     {{-- <td><a href="/staff/{{$staff->id}}/edit" class="btn btn-default">Edit</a></td> --}}
-                                    <td><a href="{{ route('staff.edit', $staff->id) }}" class="btn btn-default">Edit</a></td>
+                                    <td><a href="{{ route('staff.edit', $staff->id) }}" class="btn btn-default"> <i class="fa fa-pencil"> </i> Edit</a></td>
 
                                 </tr>
                             @endforeach

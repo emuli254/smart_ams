@@ -72,18 +72,25 @@
                     </div>
 
                     <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                        {{Form::label('in_stock', 'In stock')}}
-                        {{Form::select('in_stock', [0 => 'No', 1 => 'Yes'], $itemstock->in_stock, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Please Select One'])}}
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                {{Form::label('select_office', 'Select Office')}}
+                                {{Form::select('select_office', $office_locations->pluck('name', 'id'), $itemstock->office_location_id, ['id' => 'select_office', 'class' => 'form-control select_office', 'placeholder' => '-- Select Office --'])}}
+                            <p>Is the supplier you're looking for not in this list? Add them <a target="_blank" href="{{ route('office-locations.create') }}">here</a>.</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                        {{Form::label('discontinued', 'Discontinued')}}
-                        {{Form::select('discontinued', [0 => 'No', 1 => 'Yes'], $itemstock->discontinue, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Discontinued'])}}
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            {{Form::label('in_stock', 'In stock')}}
+                            {{Form::select('in_stock', [0 => 'No', 1 => 'Yes'], $itemstock->in_stock, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Please Select One'])}}
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                            {{Form::label('discontinued', 'Discontinued')}}
+                            {{Form::select('discontinued', [0 => 'No', 1 => 'Yes'], $itemstock->discontinue, ['id' => 'select2', 'class' => 'form-control select2', 'placeholder' => 'Discontinued'])}}
+                            </div>
+                        </div>
                     </div>
 
                 {{ Form::hidden('_method', 'PUT') }}

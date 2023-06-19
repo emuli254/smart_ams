@@ -1,6 +1,6 @@
 {{-- @extends('adminlte::page') --}}
 {{-- @extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'ODPP Asset Management System by Erick Muli', 'navName' => 'Dashboard', 'activeButton' => 'laravel']) --}}
-@extends('layouts.app', ['activePage' => 'edit', 'title' => 'New Staff', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
+@extends('layouts.app', ['activePage' => 'edit', 'title' => 'ODPP AMS | New Staff', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 
 @section('title', 'New staff')
 
