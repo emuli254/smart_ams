@@ -1,4 +1,5 @@
 @extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'Suppliers List', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
+{{-- @extends('adminlte::page') --}}
 
 @section('title', 'Suppliers')
 
@@ -7,45 +8,46 @@
 @stop
 
 @section('content')
-	@include('includes.messages')
-    <div class="row">
-			<div class="col-sm-12">
-				<div class="box box-danger">
-					<div class="box-header with-border">
-						<h3 class="box-title">Suppliers</h3>
-					</div>
 
-                    <div class="d-flex justify-content-end">
-                        <a href="{{ route('suppliers.create') }}" class="btn btn-success"> New Supplier </a>
-                    </div>
+@include('includes.messages')
 
-					<div class="box-body">
-						<table class="table" id="datatable">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Supplier name</th>
-									<th>Supplier website</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
+    <div class="col-sm-12">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Suppliers</h3>
+            </div>
 
-								@foreach ($suppliers as $supplier)
-									<tr>
-										<td>{{$supplier->id}}</td>
-										<td><a href="{{url('')}}/suppliers/{{$supplier->id}}">{{$supplier->name}}</a></td>
-										<td><a href="{{$supplier->website}}" target="_blank">{{$supplier->website}}</a></td>
-										<td><a href="{{url('')}}/suppliers/{{$supplier->id}}/edit" class="btn btn-default">Edit</a></td>
-									</tr>
-								@endforeach
+            <div class="d-flex justify-content-end">
+                <a href="{{ route('suppliers.create') }}" class="btn btn-success"> New Supplier </a>
+            </div>
 
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
+            <div class="box-body">
+                <table class="table" id="datatable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Supplier name</th>
+                            <th>Supplier website</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach ($suppliers as $supplier)
+                            <tr>
+                                <td>{{$supplier->id}}</td>
+                                <td><a href="{{url('')}}/suppliers/{{$supplier->id}}">{{$supplier->name}}</a></td>
+                                <td><a href="{{$supplier->website}}" target="_blank">{{$supplier->website}}</a></td>
+                                <td><a href="{{url('')}}/suppliers/{{$supplier->id}}/edit" class="btn btn-default">Edit</a></td>
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+
 @stop
 
 @section('js')

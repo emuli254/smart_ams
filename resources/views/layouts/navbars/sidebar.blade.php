@@ -19,7 +19,7 @@ Tip 2: you can also add an image using data-image tag
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="{{route('page.index', 'staff')}}" @if($activeButton =='laravel') aria-expanded="true" @endif>
+                {{-- <a class="nav-link" data-toggle="collapse" href="{{route('page.index', 'staff')}}" @if($activeButton =='laravel') aria-expanded="true" @endif>
                     <i>
                         <img src="{{ asset('light-bootstrap/img/laravel.svg') }}" style="width:25px">
                     </i>
@@ -27,18 +27,20 @@ Tip 2: you can also add an image using data-image tag
                         {{ __('Staff') }}
                         <b class="caret"></b>
                     </p>
-                </a>
+                </a> --}}
                 <div class="collapse @if($activeButton =='laravel') show @endif" id="laravelExamples">
                     <ul class="nav">
                         <li class="nav-item @if($activePage == 'user') active @endif">
                             <a class="nav-link" href="{{route('profile.edit')}}">
-                                <i class="nc-icon nc-single-02"></i>
+                                {{-- <i class="nc-icon nc-single-02"></i> --}}
+                                <i class="nc-icon nc-circle-09"></i>
                                 <p>{{ __("User Profile") }}</p>
                             </a>
                         </li>
                         <li class="nav-item @if($activePage == 'user-management') active @endif">
                             <a class="nav-link" href="{{route('page.index', 'staff')}}">
-                                <i class="nc-icon nc-circle-09"></i>
+                                {{-- <i class="nc-icon nc-circle-09"></i> --}}
+                                <i class="fa fa-users"></i>
                                 <p>{{ __("Staff Management") }}</p>
                             </a>
                         </li>
@@ -52,12 +54,14 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Asset List") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'typography') active @endif">
+
+            {{-- <li class="nav-item @if($activePage == 'typography') active @endif">
                 <a class="nav-link" href="{{route('page.index', 'orders')}}">
                     <i class="nc-icon nc-paper-2"></i>
                     <p>{{ __("Orders & Requests") }}</p>
                 </a>
-            </li>
+            </li> --}}
+
             <li class="nav-item @if($activePage == 'icons') active @endif">
                 <a class="nav-link" href="{{route('page.index', 'item-categories')}}">
                     <i class="nc-icon nc-atom"></i>
@@ -66,19 +70,28 @@ Tip 2: you can also add an image using data-image tag
             </li>
             <li class="nav-item @if($activePage == 'maps') active @endif">
                 <a class="nav-link" href="{{route('page.index', 'suppliers')}}">
-                    <i class="nc-icon nc-pin-3"></i>
+                    <i class="fa fa-truck"></i>
                     <p>{{ __("Suppliers") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'notifications') active @endif">
+
+            {{-- <li class="nav-item @if($activePage == 'notifications') active @endif">
                 <a class="nav-link" href="{{route('page.index', 'notifications')}}">
                     <i class="nc-icon nc-bell-55"></i>
                     <p>{{ __("Notifications") }}</p>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> --}}
+
+            {{-- <li class="nav-item">
                 <a class="nav-link active bg-danger" href="{{route('page.index', 'office-locations')}}">
                     <i class="nc-icon nc-alien-33"></i>
+                    <p>{{ __("Office Locations") }}</p>
+                </a>
+            </li> --}}
+
+            <li class="nav-item">
+                <a class="nav-link active" href="{{route('page.index', 'office-locations')}}">
+                    <i class="fa fa-map-marker"></i>
                     <p>{{ __("Office Locations") }}</p>
                 </a>
             </li>
